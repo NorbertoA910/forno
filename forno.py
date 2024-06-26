@@ -11,10 +11,10 @@ def adicionar_placa():
     agora = datetime.now()
     placa = {"numero": contador, "stuck": False, "entrada": agora, "botao_emperramento": None}
     
-    if len(placas) > 0: #len() é uma função que returna o numero de items num objeto(placas)
+    if len(placas) > 0: # len() é uma função que returna o numero de items num objeto(placas)
         tempo_entrada_anterior = placas[-1]["entrada"]
         diferenca_tempo = (agora - tempo_entrada_anterior).total_seconds()
-        placa["tempo_espera"] = max(int(entrada_temposaida.get()), diferenca_tempo) #max() é uma função que returna o items com o valor mais alto
+        placa["tempo_espera"] = max(int(entrada_temposaida.get()), diferenca_tempo) # max() é uma função que returna o items com o valor mais alto
     else:
         placa["tempo_espera"] = int(entrada_temposaida.get())
     
