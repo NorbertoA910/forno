@@ -9,19 +9,19 @@ def adicionar_placa():
     global contador
     contador += 1
     agora = datetime.now()
-    nova_placa = {"numero": contador, "stuck": False, "entrada": agora, "botao_emperramento": None}
+    placa = {"numero": contador, "stuck": False, "entrada": agora, "botao_emperramento": None}
     
     if len(placas) > 0: #len() é uma função que returna o numero de items num objeto(placas)
         tempo_entrada_anterior = placas[-1]["entrada"]
         diferenca_tempo = (agora - tempo_entrada_anterior).total_seconds()
-        nova_placa["tempo_espera"] = max(int(entrada_temposaida.get()), diferenca_tempo) #max() é uma função que returna o items com o valor mais alto
+        placa["tempo_espera"] = max(int(entrada_temposaida.get()), diferenca_tempo) #max() é uma função que returna o items com o valor mais alto
     else:
-        nova_placa["tempo_espera"] = int(entrada_temposaida.get())
+        placa["tempo_espera"] = int(entrada_temposaida.get())
     
-    placas.append(nova_placa)
-    entrada(nova_placa)
-    nova_placa["botao_emperramento"] = tk.Button(frame_registro, text=f"Placa {contador} Emperrada", command=lambda p=nova_placa: simular_emperramento(p)) 
-    nova_placa["botao_emperramento"].pack(pady=2)
+    placas.append(placa)
+    entrada(placa)
+    placa["botao_emperramento"] = tk.Button(frame_registro, text=f"Placa {contador} Emperrada", command=lambda p=placa: simular_emperramento(p)) 
+    placa["botao_emperramento"].pack(pady=2)
 
 def entrada(placa_info):
     placa_num = placa_info["numero"]
