@@ -9,7 +9,15 @@ def adicionar_placa():
     global contador
     contador += 1
     agora = datetime.now()
-    nova_placa = {"numero": contador, "stuck": False, "entrada": agora, "tempo_espera": 0, "aviso_emperrado": False}
+    nova_placa = {
+        "numero": contador,
+        "stuck": False,
+        "entrada": agora,
+        "tempo_espera": 0,
+        "aviso_emperrado": False,
+        "botao_emperramento": None,
+        "botao_desemperramento": None
+    }
     
     if len(placas) > 0:
         tempo_entrada_anterior = placas[-1]["entrada"]
@@ -41,7 +49,7 @@ def saida():
         else:
             placa_anterior = placas[i-1]
             if placa_anterior["stuck"]:
-                break  # Se a placa anterior está emperrada, parar as verificações para placas subsequentes.
+                break
             tempo_esperado_saida = placa_anterior["tempo_espera"] + int(entrada_temposaida.get())
 
         if tempo_desde_entrada >= tempo_esperado_saida:
@@ -50,14 +58,16 @@ def saida():
                 texto_registro.see(tk.END)
                 if placa_info["botao_emperramento"]:
                     placa_info["botao_emperramento"].pack_forget()
+                if placa_info["botao_desemperramento"]:
+                    placa_info["botao_desemperramento"].pack_forget()
                 placas.remove(placa_info)
-                break  # Sai do loop para garantir que uma placa saia por vez
+                break
             else:
                 if not placa_info["aviso_emperrado"]:
                     texto_registro.insert(tk.END, f"Placa {placa_num} não foi detectada como saída após o tempo de espera!\n")
                     texto_registro.see(tk.END)
                     placa_info["aviso_emperrado"] = True
-    
+
     root.after(1000, saida)
 
 def simular_emperramento(placa_info):
@@ -68,13 +78,24 @@ def simular_emperramento(placa_info):
     
     if placa_info["botao_emperramento"]:
         placa_info["botao_emperramento"].pack_forget()
+    
+    placa_info["botao_desemperramento"] = tk.Button(frame_registro, text=f"Placa {placa_num} Desemperrar", command=lambda p=placa_info: desemperrar_placa(p)) 
+    placa_info["botao_desemperramento"].pack(pady=2)
+
+def desemperrar_placa(placa_info):
+    placa_info["stuck"] = False
+    placa_num = placa_info["numero"]
+    texto_registro.insert(tk.END, f"Placa {placa_num} foi desemperrada!\n")
+    texto_registro.see(tk.END)
+    
+    if placa_info["botao_desemperramento"]:
+        placa_info["botao_desemperramento"].pack_forget()
 
 def limpar_tudo():
     global placas, contador
     placas.clear()
     contador = 0
     texto_registro.delete(1.0, tk.END)
-    texto_registro.see(tk.END)
     for widget in frame_registro.winfo_children():
         widget.pack_forget()
 
