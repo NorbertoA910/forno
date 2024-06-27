@@ -85,7 +85,7 @@ def limpar_tudo():
         widget.pack_forget()
 
 root = Tk()
-root.title("Sensores Forno de placas")
+root.title("Forno de placas")
 root.resizable(width=False, height=False)
 
 frame_controles = Frame(root)
