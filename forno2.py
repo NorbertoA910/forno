@@ -1,5 +1,4 @@
 from tkinter import * 
-import random
 
 placas = []
 placapresa = []
@@ -7,7 +6,7 @@ contador = 0
 defaulttempo = 5
 
 root = Tk()
-root.title("Sensores Forno de Placas")
+root.title("Forno de Placas")
 root.resizable(width=False, height=False)
 
 def adicionar_placas():
