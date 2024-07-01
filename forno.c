@@ -160,5 +160,5 @@ int main() {
     }
     pthread_join(thread_id, NULL);
     pthread_mutex_destroy(&lock);
-    return 0;
+    return 1;
 }
